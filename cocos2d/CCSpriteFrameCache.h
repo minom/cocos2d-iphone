@@ -50,7 +50,6 @@
 {
 	NSMutableDictionary *spriteFrames_;
 	NSMutableDictionary *spriteFramesAliases_;
-	NSMutableSet		*loadedFilenames_;
 }
 
 /** Retruns ths shared instance of the Sprite Frame cache */
@@ -60,6 +59,14 @@
  */
 +(void)purgeSharedSpriteFrameCache;
 
+
+/** Adds multiple Sprite Frames with a dictionary. The texture filename will be associated with the created sprite frames.
+ */
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
+
+/** Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+ */
+-(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture2D *)texture;
 
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
@@ -74,6 +81,10 @@
 /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture;
+
+-(NSDictionary *) spriteFramesWithFile:(NSString *)plist addToCache:(BOOL)addToCache;
+
+-(NSDictionary *) spriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture addToCache:(BOOL)addToCache;
 
 /** Adds an sprite frame with a given name.
  If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -100,11 +111,16 @@
 -(void) removeSpriteFrameByName:(NSString*)name;
 
 /** Removes multiple Sprite Frames from a plist file.
-* Sprite Frames stored in this file will be removed.
-* It is convinient to call this method when a specific texture needs to be removed.
-* @since v0.99.5
-*/
+ * Sprite Frames stored in this file will be removed.
+ * It is convinient to call this method when a specific texture needs to be removed.
+ * @since v0.99.5
+ */
 - (void) removeSpriteFramesFromFile:(NSString*) plist;
+
+/** Removes multiple Sprite Frames from NSDictionary.
+ * @since v0.99.5
+ */
+- (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary;
 
 /** Removes all Sprite Frames associated with the specified textures.
  * It is convinient to call this method when a specific texture needs to be removed.
@@ -117,5 +133,7 @@
  You should retain the returned copy if you are going to use it.
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
+
+-(CCSpriteFrame *) spriteFrameFromDictionary:(NSDictionary *)frameDict withFormat:(int)format texture:(CCTexture2D *)texture frameKey:(NSString *)frameDictKey;
 
 @end
