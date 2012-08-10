@@ -66,6 +66,8 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 
 @implementation CCGLProgram
+@synthesize program=program_;
+
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
     if ((self = [super init]) )

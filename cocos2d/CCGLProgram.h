@@ -147,4 +147,7 @@ struct _hashUniformEntry;
 
 /** returns the program error log */
 - (NSString *)programLog;
+
+@property (nonatomic, readonly) GLuint program;
+
 @end
