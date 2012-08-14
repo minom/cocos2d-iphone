@@ -8,17 +8,17 @@
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
  *
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,9 +38,9 @@
 #import <Foundation/Foundation.h>
 
 #import "CCSpriteFrame.h"
-#import "CCTexture2D.h"
 
 @class CCSprite;
+@class CCTexture2D;
 
 /** Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
@@ -60,24 +60,31 @@
 +(void)purgeSharedSpriteFrameCache;
 
 
+/** Adds multiple Sprite Frames with a dictionary. The texture filename will be associated with the created sprite frames.
+ */
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
+
 /** Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
  */
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture;
+-(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture2D *)texture;
 
 /** Adds multiple Sprite Frames from a plist file.
- * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
+ * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
  * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
+
+/** Adds multiple Sprite Frames from a plist file. The texture filename will be associated with the created sprite frames.
+ */
+-(void) addSpriteFramesWithFile:(NSString*)plist textureFilename:(NSString*)filename;
 
 /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture;
 
-/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
- @since v0.99.5
- */
--(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName;
+-(NSDictionary *) spriteFramesWithFile:(NSString *)plist addToCache:(BOOL)addToCache;
+
+-(NSDictionary *) spriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture addToCache:(BOOL)addToCache;
 
 /** Adds an sprite frame with a given name.
  If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -104,10 +111,10 @@
 -(void) removeSpriteFrameByName:(NSString*)name;
 
 /** Removes multiple Sprite Frames from a plist file.
-* Sprite Frames stored in this file will be removed.
-* It is convinient to call this method when a specific texture needs to be removed.
-* @since v0.99.5
-*/
+ * Sprite Frames stored in this file will be removed.
+ * It is convinient to call this method when a specific texture needs to be removed.
+ * @since v0.99.5
+ */
 - (void) removeSpriteFramesFromFile:(NSString*) plist;
 
 /** Removes multiple Sprite Frames from NSDictionary.
@@ -126,5 +133,7 @@
  You should retain the returned copy if you are going to use it.
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
+
+-(CCSpriteFrame *) spriteFrameFromDictionary:(NSDictionary *)frameDict withFormat:(int)format texture:(CCTexture2D *)texture frameKey:(NSString *)frameDictKey;
 
 @end
