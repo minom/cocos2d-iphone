@@ -129,7 +129,7 @@
 
 - (void) setString:(NSString*)str
 {
-	NSAssert( str, @"Invalid string" );
+	if (str == nil) str = @"";
 
 	if( string_.hash != str.hash ) {
 		[string_ release];
