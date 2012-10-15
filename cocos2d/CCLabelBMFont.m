@@ -750,7 +750,10 @@ typedef struct _FontDefHashElement
 		// unichar is a short, and an int is needed on HASH_FIND_INT
 		NSUInteger key = (NSUInteger)c;
 		HASH_FIND_INT(configuration_->fontDefDictionary_ , &key, element);
-		NSAssert(element, @"FontDefinition could not be found!");
+//		NSAssert(element, @"FontDefinition could not be found!");
+        if (!element) {
+            continue;
+        }
 
 		ccBMFontDef fontDef = element->fontDef;
 
